@@ -2,11 +2,14 @@ import pygame
 
 import random
 
+pygame.init()
+
 WIDTH=1000
 HEIGHT=800
 TITLE="RECYCLE_MARATHON"
 
 score=0
+font=pygame.font.SysFont("Arial",40)
 
 background=pygame.image.load("background1.png")
 paperbag=pygame.image.load("paperbag.png")
@@ -90,6 +93,8 @@ while run:
     sprites.draw(screen)
     if pygame.sprite.groupcollide(binsprites,rsprites,False,True):
         score=score+1
+    if pygame.sprite.groupcollide(binsprites,nonsprites,False,True):
+        score=score-1
     keys=pygame.key.get_pressed()
     if keys [pygame.K_w]:
         bin.rect.y +=5
@@ -107,8 +112,19 @@ while run:
         bin.rect.top=0
     if bin.rect.bottom>800:
         bin.rect.bottom=800
-    for event in pygame.event.get():
     
+    
+    if pygame.sprite.groupcollide(binsprites,rsprites, False, True):
+        score=score+1
+    if pygame.sprite.groupcollide(binsprites,nonsprites, False, True):
+        score=score-1
+
+  
+    score_text=font.render("Score"+str(score), True,"black")
+    screen.blit(score_text,(20,20))
+   
+    
+    for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run=False
          
